@@ -8,16 +8,17 @@ import io.ktor.http.*
 import io.ktor.server.testing.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.runBlocking
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 
-class ApplicationTest {
+
+internal class ApplicationTest {
     @Test
     fun testRoot() {
         withTestApplication({ module(testing = true) }) {
             handleRequest(HttpMethod.Get, "/").apply {
-                assertEquals(HttpStatusCode.OK, response.status())
-                assertEquals("HELLO WORLD!", response.content)
+                assertThat(response.status()).isEqualTo(HttpStatusCode.OK)
+                assertThat(response.content).isEqualTo("HELLO WORLD!")
             }
         }
     }
@@ -39,9 +40,9 @@ class ApplicationTest {
                 }
                 expectSuccess = false
             }
-            assertEquals(byteArrayOf(1, 2, 3).toList(), client.get<ByteArray>("/").toList())
-            assertEquals("MyValue", client.request<HttpResponse>("/").headers["X-MyHeader"])
-            assertEquals("Not Found other/path", client.get<String>("/other/path"))
+            assertThat(client.get<ByteArray>("/").toList()).isEqualTo(byteArrayOf(1, 2, 3).toList())
+            assertThat(client.request<HttpResponse>("/").headers["X-MyHeader"]).isEqualTo("MyValue")
+            assertThat(client.get<String>("/other/path")).isEqualTo("Not Found other/path")
         }
     }
 }
