@@ -1,9 +1,8 @@
 package com.aditmodhvadia.routes.users.data
 
 import com.aditmodhvadia.models.User
-import com.aditmodhvadia.routes.products.data.ProductDataSource
 
-class InMemoryUserDataSource : ProductDataSource {
+class InMemoryUserDataSource : UserDataSource {
     private val users = mutableListOf(
         User(1),
         User(2),
@@ -11,5 +10,5 @@ class InMemoryUserDataSource : ProductDataSource {
         User(4)
     )
 
-    override fun retrieveProducts(): Collection<User> = users
+    override fun retrieveUsers(): Collection<User> = users
 }

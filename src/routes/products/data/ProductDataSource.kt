@@ -1,7 +1,7 @@
 package com.aditmodhvadia.routes.products.data
 
-import com.aditmodhvadia.models.User
+import com.aditmodhvadia.models.Product
 
 interface ProductDataSource {
-    fun retrieveProducts(): Collection<User>
+    fun retrieveProducts(): Collection<Product>
 }

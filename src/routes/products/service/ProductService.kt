@@ -1,7 +1,7 @@
 package com.aditmodhvadia.routes.products.service
 
-import com.aditmodhvadia.models.User
+import com.aditmodhvadia.models.Product
 
 interface ProductService {
-    fun findAll(): Collection<User>
+    fun findAll(): Collection<Product>
 }

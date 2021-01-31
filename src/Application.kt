@@ -1,5 +1,6 @@
 package com.aditmodhvadia
 
+import com.aditmodhvadia.routes.products.product
 import com.aditmodhvadia.routes.users.user
 import io.ktor.application.*
 import io.ktor.features.*
@@ -47,6 +48,7 @@ fun Application.module(testing: Boolean = false) {
         }
 
         user()
+        product()
     }
 }
 
