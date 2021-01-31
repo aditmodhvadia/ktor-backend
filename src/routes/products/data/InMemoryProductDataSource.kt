@@ -1,9 +1,8 @@
-package com.aditmodhvadia.routes.users.data
+package com.aditmodhvadia.routes.products.data
 
 import com.aditmodhvadia.models.User
-import com.aditmodhvadia.routes.products.data.ProductDataSource
 
-class InMemoryUserDataSource : ProductDataSource {
+class InMemoryProductDataSource : ProductDataSource {
     private val users = mutableListOf(
         User(1),
         User(2),

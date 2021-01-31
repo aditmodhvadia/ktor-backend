@@ -1,8 +1,9 @@
 package com.aditmodhvadia.routes.users.service
 
-import com.aditmodhvadia.User
-import com.aditmodhvadia.routes.users.data.UserDataSource
+import com.aditmodhvadia.models.User
+import com.aditmodhvadia.routes.products.data.ProductDataSource
+import com.aditmodhvadia.routes.products.service.ProductService
 
-class InMemoryUserService(private val userDataSource: UserDataSource) : UserService {
-    override fun findAll(): Collection<User> = userDataSource.retrieveUsers()
+class InMemoryUserService(private val userDataSource: ProductDataSource) : ProductService {
+    override fun findAll(): Collection<User> = userDataSource.retrieveProducts()
 }
