@@ -16,5 +16,9 @@ fun Route.product() {
         get {
             call.respond(productService.findAll())
         }
+
+        /*get("{productId}") {
+
+        }*/
     }
 }

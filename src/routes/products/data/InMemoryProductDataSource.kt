@@ -11,4 +11,7 @@ class InMemoryProductDataSource : ProductDataSource {
     )
 
     override fun retrieveProducts(): Collection<Product> = products
+    override fun retrieveProduct(productId: Long): Product {
+        return products.find { it.id == productId } ?: throw NoSuchElementException("Product with given id not found")
+    }
 }
