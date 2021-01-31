@@ -1,15 +1,15 @@
 package com.aditmodhvadia.routes.users
 
-import com.aditmodhvadia.routes.products.data.InMemoryProductDataSource
-import com.aditmodhvadia.routes.products.data.ProductDataSource
-import com.aditmodhvadia.routes.products.service.InMemoryProductService
-import com.aditmodhvadia.routes.products.service.ProductService
+import com.aditmodhvadia.routes.users.data.InMemoryUserDataSource
+import com.aditmodhvadia.routes.users.data.UserDataSource
+import com.aditmodhvadia.routes.users.service.InMemoryUserService
+import com.aditmodhvadia.routes.users.service.UserService
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-private val dataSource: ProductDataSource = InMemoryProductDataSource()
-private val userService: ProductService = InMemoryProductService(dataSource)
+private val dataSource: UserDataSource = InMemoryUserDataSource()
+private val userService: UserService = InMemoryUserService(dataSource)
 
 fun Route.user() {
     route("users") {

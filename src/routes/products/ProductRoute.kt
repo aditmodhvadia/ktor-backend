@@ -7,6 +7,7 @@ import com.aditmodhvadia.routes.products.service.ProductService
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import java.security.InvalidParameterException
 
 private val dataSource: ProductDataSource = InMemoryProductDataSource()
 private val productService: ProductService = InMemoryProductService(dataSource)
@@ -17,8 +18,14 @@ fun Route.product() {
             call.respond(productService.findAll())
         }
 
-        /*get("{productId}") {
-
-        }*/
+        get("{productId}") {
+            try {
+                call.parameters["productId"]?.toLong()
+            } catch (e: NumberFormatException) {
+                throw InvalidParameterException("Specified product id is incorrect")
+            }?.let { productId ->
+                call.respond(productService.findOne(productId))
+            }
+        }
     }
 }
