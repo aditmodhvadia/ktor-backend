@@ -12,11 +12,22 @@ internal class InMemoryProductServiceTest {
     private val userService: ProductService = InMemoryProductService(mockDataSource)
 
     @Test
-    fun `should get all users`() {
+    fun `should get all products`() {
         // when
         userService.findAll()
 
         // then
         verify(exactly = 1) { mockDataSource.retrieveProducts() }
+    }
+
+    @Test
+    fun `should get product`() {
+        // given
+        val productId = 1L
+        // when
+        userService.findOne(productId)
+
+        // then
+        verify(exactly = 1) { mockDataSource.retrieveProduct(productId) }
     }
 }
