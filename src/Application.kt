@@ -1,5 +1,6 @@
 package com.aditmodhvadia
 
+import com.aditmodhvadia.routes.users.user
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.gson.*
@@ -36,18 +37,16 @@ fun Application.module(testing: Boolean = false) {
         }
 
         install(StatusPages) {
-            exception<AuthenticationException> { cause ->
+            exception<AuthenticationException> {
                 call.respond(HttpStatusCode.Unauthorized)
             }
-            exception<AuthorizationException> { cause ->
+            exception<AuthorizationException> {
                 call.respond(HttpStatusCode.Forbidden)
             }
 
         }
 
-        get("/json/gson") {
-            call.respond(mapOf("hello" to "world"))
-        }
+        user()
     }
 }
 
