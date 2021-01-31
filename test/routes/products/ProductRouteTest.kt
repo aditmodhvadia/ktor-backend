@@ -1,6 +1,8 @@
 package com.aditmodhvadia.routes.products
 
+import com.aditmodhvadia.models.Product
 import com.aditmodhvadia.module
+import com.google.gson.GsonBuilder
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import org.assertj.core.api.Assertions.assertThat
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 internal class ProductRouteTest {
+    private val gson by lazy { GsonBuilder().setPrettyPrinting().serializeNulls().disableHtmlEscaping().create() }
 
     @Nested
     @DisplayName("GET /products")
@@ -23,7 +26,15 @@ internal class ProductRouteTest {
                     assertThat(response.status()).isEqualTo(HttpStatusCode.OK)
                     assertThat(response.contentType().toString())
                         .contains(ContentType.Application.Json.toString())
-                    assertThat(response.content).isNotEmpty()
+                    assertThat(response.content).isNotEmpty
+
+                    val products = gson.fromJson(response.content, Array<Product>::class.java)
+                    assertThat(products).allSatisfy {
+                        assertThat(it.id).isGreaterThanOrEqualTo(1)
+                        assertThat(it.name).isNotBlank
+                        assertThat(it.department).isNotBlank
+                        assertThat(it.price).isNotBlank
+                    }
                 }
             }
         }
@@ -44,7 +55,13 @@ internal class ProductRouteTest {
                     assertThat(response.status()).isEqualTo(HttpStatusCode.OK)
                     assertThat(response.contentType().toString())
                         .contains(ContentType.Application.Json.toString())
-                    assertThat(response.content).isNotEmpty()
+                    assertThat(response.content).isNotEmpty
+
+                    val products = gson.fromJson(response.content, Product::class.java)
+                    assertThat(products.id).isGreaterThanOrEqualTo(1)
+                    assertThat(products.name).isNotBlank
+                    assertThat(products.department).isNotBlank
+                    assertThat(products.price).isNotBlank
                 }
             }
         }
