@@ -1,4 +1,4 @@
-package routes.users.data
+package modules.users.data
 
 import com.aditmodhvadia.routes.users.data.InMemoryUserDataSource
 import org.assertj.core.api.Assertions.assertThat

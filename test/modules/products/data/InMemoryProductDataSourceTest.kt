@@ -1,4 +1,4 @@
-package routes.products.data
+package modules.products.data
 
 import com.aditmodhvadia.models.Product
 import com.aditmodhvadia.routes.products.data.InMemoryProductDataSource
