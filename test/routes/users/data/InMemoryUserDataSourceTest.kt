@@ -18,9 +18,6 @@ internal class InMemoryUserDataSourceTest {
 
     @Test
     fun `should get some data`() {
-        // given
-
-
         // when
         val users = inMemoryDataSource.retrieveUsers()
 

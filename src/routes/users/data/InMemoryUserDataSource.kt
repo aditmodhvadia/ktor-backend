@@ -1,6 +1,6 @@
 package com.aditmodhvadia.routes.users.data
 
-import com.aditmodhvadia.User
+import com.aditmodhvadia.models.User
 
 class InMemoryUserDataSource : UserDataSource {
     private val users = mutableListOf(

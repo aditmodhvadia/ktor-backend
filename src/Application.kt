@@ -1,5 +1,6 @@
 package com.aditmodhvadia
 
+import com.aditmodhvadia.routes.products.product
 import com.aditmodhvadia.routes.users.user
 import io.ktor.application.*
 import io.ktor.features.*
@@ -9,6 +10,7 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import org.slf4j.event.Level
+import java.security.InvalidParameterException
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -25,7 +27,11 @@ fun Application.module(testing: Boolean = false) {
     }
 
     install(ContentNegotiation) {
-        gson {}
+        gson {
+            setPrettyPrinting()
+            disableHtmlEscaping()
+            serializeNulls()
+        }
     }
 
     /*val client = HttpClient() {
@@ -43,10 +49,16 @@ fun Application.module(testing: Boolean = false) {
             exception<AuthorizationException> {
                 call.respond(HttpStatusCode.Forbidden)
             }
-
+            exception<InvalidParameterException> {
+                call.respond(HttpStatusCode.BadRequest, it.message ?: "BAD REQUEST")
+            }
+            exception<NoSuchElementException> {
+                call.respond(HttpStatusCode.NoContent, it.message ?: "No such element found")
+            }
         }
 
         user()
+        product()
     }
 }
 
