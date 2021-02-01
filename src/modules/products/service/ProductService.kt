@@ -1,4 +1,4 @@
-package com.aditmodhvadia.routes.products.service
+package com.aditmodhvadia.modules.products.service
 
 import com.aditmodhvadia.models.Product
 

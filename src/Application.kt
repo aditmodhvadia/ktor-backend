@@ -1,7 +1,5 @@
 package com.aditmodhvadia
 
-import com.aditmodhvadia.routes.products.product
-import com.aditmodhvadia.modules.users.user
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.gson.*
@@ -49,15 +47,7 @@ fun Application.main(testing: Boolean = false) {
             exception<AuthorizationException> {
                 call.respond(HttpStatusCode.Forbidden)
             }
-            exception<InvalidParameterException> {
-                call.respond(HttpStatusCode.BadRequest, it.message ?: "BAD REQUEST")
-            }
-            exception<NoSuchElementException> {
-                call.respond(HttpStatusCode.NoContent, it.message ?: "No such element found")
-            }
         }
-
-        product()
     }
 }
 

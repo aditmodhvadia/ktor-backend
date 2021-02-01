@@ -1,6 +1,8 @@
 package com.aditmodhvadia.routes.products.service
 
-import com.aditmodhvadia.routes.products.data.InMemoryProductDataSource
+import com.aditmodhvadia.modules.products.service.InMemoryProductService
+import com.aditmodhvadia.modules.products.service.ProductService
+import com.aditmodhvadia.modules.products.data.InMemoryProductDataSource
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
