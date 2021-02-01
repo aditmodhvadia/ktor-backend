@@ -1,6 +1,8 @@
 package com.aditmodhvadia.routes.users.service
 
-import com.aditmodhvadia.routes.users.data.InMemoryUserDataSource
+import com.aditmodhvadia.modules.users.data.InMemoryUserDataSource
+import com.aditmodhvadia.modules.users.service.InMemoryUserService
+import com.aditmodhvadia.modules.users.service.UserService
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test

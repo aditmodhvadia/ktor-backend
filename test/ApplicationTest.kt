@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test
 internal class ApplicationTest {
     @Test
     fun testRoot() {
-        withTestApplication({ module(testing = true) }) {
+        withTestApplication({ main(testing = true) }) {
             handleRequest(HttpMethod.Get, "/").apply {
                 assertThat(response.status()).isEqualTo(HttpStatusCode.OK)
                 assertThat(response.content).isEqualTo("HELLO WORLD!")

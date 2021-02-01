@@ -1,7 +1,7 @@
 package com.aditmodhvadia
 
 import com.aditmodhvadia.routes.products.product
-import com.aditmodhvadia.routes.users.user
+import com.aditmodhvadia.modules.users.user
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.gson.*
@@ -16,7 +16,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
-fun Application.module(testing: Boolean = false) {
+fun Application.main(testing: Boolean = false) {
     install(CallLogging) {
         level = Level.INFO
         filter { call -> call.request.path().startsWith("/") }
@@ -57,7 +57,6 @@ fun Application.module(testing: Boolean = false) {
             }
         }
 
-        user()
         product()
     }
 }
