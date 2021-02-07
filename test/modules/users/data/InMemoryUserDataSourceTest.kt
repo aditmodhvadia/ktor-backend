@@ -1,6 +1,6 @@
-package routes.users.data
+package modules.users.data
 
-import com.aditmodhvadia.routes.users.data.InMemoryUserDataSource
+import com.aditmodhvadia.modules.users.data.InMemoryUserDataSource
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

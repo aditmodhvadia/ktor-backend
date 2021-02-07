@@ -1,4 +1,4 @@
-package com.aditmodhvadia.routes.users.service
+package com.aditmodhvadia.modules.users.service
 
 import com.aditmodhvadia.models.User
 

@@ -1,22 +1,18 @@
 package com.aditmodhvadia
 
-import com.aditmodhvadia.routes.products.product
-import com.aditmodhvadia.routes.users.user
 import io.ktor.application.*
 import io.ktor.features.*
-import io.ktor.gson.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import org.slf4j.event.Level
-import java.security.InvalidParameterException
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
-fun Application.module(testing: Boolean = false) {
+fun Application.main(testing: Boolean = false) {
     install(CallLogging) {
         level = Level.INFO
         filter { call -> call.request.path().startsWith("/") }
@@ -26,13 +22,7 @@ fun Application.module(testing: Boolean = false) {
         header("X-Engine", "Ktor") // will send this header with each response
     }
 
-    install(ContentNegotiation) {
-        gson {
-            setPrettyPrinting()
-            disableHtmlEscaping()
-            serializeNulls()
-        }
-    }
+    installGson()
 
     /*val client = HttpClient() {
     }*/
@@ -49,16 +39,7 @@ fun Application.module(testing: Boolean = false) {
             exception<AuthorizationException> {
                 call.respond(HttpStatusCode.Forbidden)
             }
-            exception<InvalidParameterException> {
-                call.respond(HttpStatusCode.BadRequest, it.message ?: "BAD REQUEST")
-            }
-            exception<NoSuchElementException> {
-                call.respond(HttpStatusCode.NoContent, it.message ?: "No such element found")
-            }
         }
-
-        user()
-        product()
     }
 }
 

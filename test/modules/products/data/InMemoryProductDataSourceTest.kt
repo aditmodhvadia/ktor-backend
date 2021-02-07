@@ -1,7 +1,7 @@
-package routes.products.data
+package modules.products.data
 
 import com.aditmodhvadia.models.Product
-import com.aditmodhvadia.routes.products.data.InMemoryProductDataSource
+import com.aditmodhvadia.modules.products.data.InMemoryProductDataSource
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

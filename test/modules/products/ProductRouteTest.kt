@@ -1,7 +1,8 @@
-package com.aditmodhvadia.routes.products
+package com.aditmodhvadia.modules.products
 
+import com.aditmodhvadia.installGson
 import com.aditmodhvadia.models.Product
-import com.aditmodhvadia.module
+import com.aditmodhvadia.runTestApplication
 import com.google.gson.GsonBuilder
 import io.ktor.http.*
 import io.ktor.server.testing.*
@@ -21,7 +22,7 @@ internal class ProductRouteTest {
         @Test
         fun `should return collection of products with success response`() {
             // when, then
-            withTestApplication({ module(testing = true) }) {
+            withTestApplication() {
                 handleRequest(HttpMethod.Get, "/products").apply {
                     assertThat(response.status()).isEqualTo(HttpStatusCode.OK)
                     assertThat(response.contentType().toString())
@@ -50,7 +51,7 @@ internal class ProductRouteTest {
             val productId = 1
 
             // when/then
-            withTestApplication({ module(testing = true) }) {
+            withTestApplication() {
                 handleRequest(HttpMethod.Get, "/products/$productId").apply {
                     assertThat(response.status()).isEqualTo(HttpStatusCode.OK)
                     assertThat(response.contentType().toString())
@@ -72,7 +73,7 @@ internal class ProductRouteTest {
             val productId = -1
 
             // when/then
-            withTestApplication({ module(testing = true) }) {
+            withTestApplication() {
                 handleRequest(HttpMethod.Get, "/products/$productId").apply {
                     assertThat(response.status()).isEqualTo(HttpStatusCode.NoContent)
                     assertThat(response.content).isEqualTo("Product with given id not found")
@@ -86,12 +87,18 @@ internal class ProductRouteTest {
             val productId = "invalid_product_id"
 
             // when/then
-            withTestApplication({ module(testing = true) }) {
+            runProductTestApplication() {
                 handleRequest(HttpMethod.Get, "/products/$productId").apply {
                     assertThat(response.status()).isEqualTo(HttpStatusCode.BadRequest)
                     assertThat(response.content).isEqualTo("Specified product id is incorrect")
                 }
             }
+        }
+    }
+
+    fun runProductTestApplication(block: TestApplicationEngine.() -> Unit) {
+        runTestApplication({ product(testing = true).apply { installGson() } }) {
+            block()
         }
     }
 }

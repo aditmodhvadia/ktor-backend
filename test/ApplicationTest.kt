@@ -1,5 +1,6 @@
 package com.aditmodhvadia
 
+import io.ktor.application.*
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.request.*
@@ -15,7 +16,7 @@ import org.junit.jupiter.api.Test
 internal class ApplicationTest {
     @Test
     fun testRoot() {
-        withTestApplication({ module(testing = true) }) {
+        runTestApplication {
             handleRequest(HttpMethod.Get, "/").apply {
                 assertThat(response.status()).isEqualTo(HttpStatusCode.OK)
                 assertThat(response.content).isEqualTo("HELLO WORLD!")
@@ -44,5 +45,14 @@ internal class ApplicationTest {
             assertThat(client.request<HttpResponse>("/").headers["X-MyHeader"]).isEqualTo("MyValue")
             assertThat(client.get<String>("/other/path")).isEqualTo("Not Found other/path")
         }
+    }
+}
+
+fun runTestApplication(
+    module: Application.() -> Unit = { main(testing = true) },
+    block: TestApplicationEngine.() -> Unit,
+) {
+    withTestApplication(module) {
+        block()
     }
 }
