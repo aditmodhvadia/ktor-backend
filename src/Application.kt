@@ -2,13 +2,11 @@ package com.aditmodhvadia
 
 import io.ktor.application.*
 import io.ktor.features.*
-import io.ktor.gson.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import org.slf4j.event.Level
-import java.security.InvalidParameterException
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -24,13 +22,7 @@ fun Application.main(testing: Boolean = false) {
         header("X-Engine", "Ktor") // will send this header with each response
     }
 
-    install(ContentNegotiation) {
-        gson {
-            setPrettyPrinting()
-            disableHtmlEscaping()
-            serializeNulls()
-        }
-    }
+    installGson()
 
     /*val client = HttpClient() {
     }*/

@@ -1,8 +1,8 @@
 package com.aditmodhvadia.modules.users
 
 import com.aditmodhvadia.installGson
-import com.aditmodhvadia.main
 import com.aditmodhvadia.models.User
+import com.aditmodhvadia.runTestApplication
 import com.google.gson.GsonBuilder
 import io.ktor.http.*
 import io.ktor.server.testing.*
@@ -17,7 +17,7 @@ internal class UserModuleTest {
     @Test
     fun `should return collection of users with success response`() {
         // when, then
-        withTestApplication({ user(testing = true).apply { installGson() } }) {
+        runUserTestApplication() {
             handleRequest(HttpMethod.Get, "/users").apply {
                 assertThat(response.status()).isEqualTo(HttpStatusCode.OK)
                 assertThat(response.contentType().toString())
@@ -27,6 +27,12 @@ internal class UserModuleTest {
                 val users = gson.fromJson(response.content, Array<User>::class.java)
                 assertThat(users).allSatisfy { assertThat(it.id).isGreaterThanOrEqualTo(1) }
             }
+        }
+    }
+
+    fun runUserTestApplication(block: TestApplicationEngine.() -> Unit) {
+        runTestApplication({ user(testing = true).apply { installGson() } }) {
+            block()
         }
     }
 }
