@@ -1,7 +1,7 @@
 package com.aditmodhvadia.modules.users.data
 
-import com.aditmodhvadia.models.User
+import com.aditmodhvadia.models.UserDto
 
 interface UserDataSource {
-    fun retrieveUsers(): Collection<User>
+    fun retrieveUsers(): Collection<UserDto>
 }
