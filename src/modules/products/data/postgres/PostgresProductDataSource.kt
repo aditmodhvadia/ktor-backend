@@ -1,10 +1,8 @@
 package com.aditmodhvadia.modules.products.data.postgres
 
-import com.aditmodhvadia.database.postgres.PostgreSqlDatabase
+import com.aditmodhvadia.database.postgres.PostgreSqlDatabase.runInDatabase
 import com.aditmodhvadia.models.ProductDto
 import com.aditmodhvadia.modules.products.data.ProductDataSource
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.stream.Collectors
 import java.util.stream.StreamSupport
 
@@ -22,16 +20,6 @@ class PostgresProductDataSource(private val test: Boolean = false) : ProductData
         }
     }
 
-    private fun <R> runInDatabase(test: Boolean, block: Transaction.() -> R): R {
-        if (test) {
-            PostgreSqlDatabase.connectToTestDatabase()
-        } else {
-            PostgreSqlDatabase.connectToDatabase()
-        }
-        return transaction {
-            block()
-        }
-    }
 
     private fun Product.toDto(): ProductDto {
         return ProductDto(this.id.value, this.name, this.price, this.department)
