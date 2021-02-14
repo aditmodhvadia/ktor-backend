@@ -1,7 +1,7 @@
 package com.aditmodhvadia.modules.products
 
-import com.aditmodhvadia.modules.products.data.InMemoryProductDataSource
 import com.aditmodhvadia.modules.products.data.ProductDataSource
+import com.aditmodhvadia.modules.products.data.postgres.PostgresProductDataSource
 import com.aditmodhvadia.modules.products.service.InMemoryProductService
 import com.aditmodhvadia.modules.products.service.ProductService
 import io.ktor.application.*
@@ -11,7 +11,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import java.security.InvalidParameterException
 
-private val dataSource: ProductDataSource = InMemoryProductDataSource()
+private val dataSource: ProductDataSource = PostgresProductDataSource()
 private val productService: ProductService = InMemoryProductService(dataSource)
 
 fun Application.product(testing: Boolean = false) {
@@ -31,7 +31,7 @@ fun Application.product(testing: Boolean = false) {
 
             get("{productId}") {
                 try {
-                    call.parameters["productId"]?.toLong()
+                    call.parameters["productId"]?.toInt()
                 } catch (e: NumberFormatException) {
                     throw InvalidParameterException("Specified product id is incorrect")
                 }?.let { productId ->

@@ -1,7 +1,7 @@
 package com.aditmodhvadia.modules.users.service
 
-import com.aditmodhvadia.models.User
+import com.aditmodhvadia.models.UserDto
 
 interface UserService {
-    fun findAll(): Collection<User>
+    fun findAll(): Collection<UserDto>
 }

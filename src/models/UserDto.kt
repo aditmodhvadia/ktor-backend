@@ -1,3 +1,3 @@
 package com.aditmodhvadia.models
 
-data class User(val id: Long)
+data class UserDto(val id: Long)

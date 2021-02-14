@@ -1,7 +1,7 @@
 package com.aditmodhvadia.modules.products
 
 import com.aditmodhvadia.installGson
-import com.aditmodhvadia.models.Product
+import com.aditmodhvadia.models.ProductDto
 import com.aditmodhvadia.runTestApplication
 import com.google.gson.GsonBuilder
 import io.ktor.http.*
@@ -22,14 +22,14 @@ internal class ProductRouteTest {
         @Test
         fun `should return collection of products with success response`() {
             // when, then
-            withTestApplication() {
+            runProductTestApplication {
                 handleRequest(HttpMethod.Get, "/products").apply {
                     assertThat(response.status()).isEqualTo(HttpStatusCode.OK)
                     assertThat(response.contentType().toString())
                         .contains(ContentType.Application.Json.toString())
                     assertThat(response.content).isNotEmpty
 
-                    val products = gson.fromJson(response.content, Array<Product>::class.java)
+                    val products = gson.fromJson(response.content, Array<ProductDto>::class.java)
                     assertThat(products).allSatisfy {
                         assertThat(it.id).isGreaterThanOrEqualTo(1)
                         assertThat(it.name).isNotBlank
@@ -51,14 +51,14 @@ internal class ProductRouteTest {
             val productId = 1
 
             // when/then
-            withTestApplication() {
+            runProductTestApplication {
                 handleRequest(HttpMethod.Get, "/products/$productId").apply {
                     assertThat(response.status()).isEqualTo(HttpStatusCode.OK)
                     assertThat(response.contentType().toString())
                         .contains(ContentType.Application.Json.toString())
                     assertThat(response.content).isNotEmpty
 
-                    val products = gson.fromJson(response.content, Product::class.java)
+                    val products = gson.fromJson(response.content, ProductDto::class.java)
                     assertThat(products.id).isGreaterThanOrEqualTo(1)
                     assertThat(products.name).isNotBlank
                     assertThat(products.department).isNotBlank
@@ -73,7 +73,7 @@ internal class ProductRouteTest {
             val productId = -1
 
             // when/then
-            withTestApplication() {
+            runProductTestApplication {
                 handleRequest(HttpMethod.Get, "/products/$productId").apply {
                     assertThat(response.status()).isEqualTo(HttpStatusCode.NoContent)
                     assertThat(response.content).isEqualTo("Product with given id not found")
@@ -87,7 +87,7 @@ internal class ProductRouteTest {
             val productId = "invalid_product_id"
 
             // when/then
-            runProductTestApplication() {
+            runProductTestApplication {
                 handleRequest(HttpMethod.Get, "/products/$productId").apply {
                     assertThat(response.status()).isEqualTo(HttpStatusCode.BadRequest)
                     assertThat(response.content).isEqualTo("Specified product id is incorrect")

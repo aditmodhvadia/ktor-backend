@@ -1,7 +1,7 @@
 package com.aditmodhvadia.modules.users
 
 import com.aditmodhvadia.installGson
-import com.aditmodhvadia.models.User
+import com.aditmodhvadia.models.UserDto
 import com.aditmodhvadia.runTestApplication
 import com.google.gson.GsonBuilder
 import io.ktor.http.*
@@ -24,7 +24,7 @@ internal class UserModuleTest {
                     .contains(ContentType.Application.Json.toString())
                 assertThat(response.content).isNotEmpty
 
-                val users = gson.fromJson(response.content, Array<User>::class.java)
+                val users = gson.fromJson(response.content, Array<UserDto>::class.java)
                 assertThat(users).allSatisfy { assertThat(it.id).isGreaterThanOrEqualTo(1) }
             }
         }
