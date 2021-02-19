@@ -8,16 +8,6 @@ import java.util.stream.StreamSupport
 
 class PostgresUserDataSource(private val test: Boolean = false) : UserDataSource {
 
-    private fun User.toDto(): UserDto {
-        return UserDto(this.id.value,
-            this.firstName,
-            this.lastName,
-            this.email,
-            this.gender,
-            this.dateOfBirth,
-            this.countryOfBirth)
-    }
-
     override fun retrieveUsers(): Collection<UserDto> {
         return runInDatabase(test) {
             val users = User.all()
